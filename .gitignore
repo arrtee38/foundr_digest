@@ -35,3 +35,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore Procfile until IP's are kept in secrets
+/Procfile.dev
