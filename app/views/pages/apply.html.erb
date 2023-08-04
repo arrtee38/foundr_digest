@@ -1,9 +1,10 @@
 <%= render partial: 'shared/heading', locals: { title: 'Apply to Founder Digest', tagline: 'Each submission is manually reviewed by our team within 24 hours.' } %>
 
+<% plan_name = params[:plan] || "free" %>
 
 <div class="max-w-lg mx-auto">
  <%= form_for UserSubmission.new do |f| %>
-  <input type="hidden" name="plan" value="<%= params[:plan]%>">
+  <input type="hidden" id="user_submission_plan_name" name="user_submission[plan_name]" value="<%= params[:plan]%>">
   <div class="space-y-12">
     <div>
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
