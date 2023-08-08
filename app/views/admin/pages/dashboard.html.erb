@@ -44,7 +44,7 @@
                       <%= form_for user_submission, url: admin_user_submission_path(user_submission.id) do |f| %>
                         <select id="user_submission_status" name="user_submission[status]" class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                           <option <%= 'selected' if user_submission.status.nil? %>>Pending</option>
-                          <option <%= 'selected' if user_submission.status == 'Approve' %>>Approve</option>
+                          <option <%= 'selected' if user_submission.status == 'Accept' %>>Accept</option>
                           <option <%= 'selected' if user_submission.status == 'Reject' %>>Reject</option>
                         </select>
                         <%= f.submit "Update", class: "w-full rounded-md bg-brand-purple-light my-2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold" %>
