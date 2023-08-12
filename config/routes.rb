@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root 'pages#home'
-  get 'apply', to: 'pages#apply'
+  get 'apply', to: 'pages#apply', as: 'apply'
   get 'thanks', to: 'pages#thanks', as: 'thanks'
   get 'start', to: 'pages#start', as: 'start'
+  get 'magic_login', to: 'pages#magic_login', as: 'magic_login'
 
   devise_for :users
   get 'logout', to: 'pages#logout', as: 'logout'
