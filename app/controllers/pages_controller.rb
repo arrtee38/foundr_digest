@@ -10,6 +10,9 @@ class PagesController < ApplicationController
   def start
   end
 
+  def thanks
+  end
+
   def logout
     sign_out(current_user)
     redirect_to root_path
