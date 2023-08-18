@@ -13,27 +13,27 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   get 'stakeholder_updates/new', to: 'stakeholder_updates#new'
 
-  resources :account, only: [:index, :update]
+  resources :account, only: %i[index update]
   resources :billing_portal, only: [:create]
   match '/billing_portal' => 'billing_portal#create', via: [:get]
   match '/cancel' => 'billing_portal#destroy', via: [:get]
 
   resources :user_submissions, only: [:create]
-  # post 'user_submissions', to: 'user_submissions#create' 
+  resources :projects, only: [:create]
 
   # static pages
-  pages = %w(
+  pages = %w[
     privacy terms
-  )
+  ]
 
   pages.each do |page|
     get "/#{page}", to: "pages##{page}", as: "#{page.gsub('-', '_')}"
   end
 
-namespace :admin do
-  get '/', to: 'pages#dashboard'
-  resources :user_submissions, only: [:update]
-end
+  namespace :admin do
+    get '/', to: 'pages#dashboard'
+    resources :user_submissions, only: [:update]
+  end
 
   # # admin panels
   # authenticated :user, -> user { user.admin? } do
