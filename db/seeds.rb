@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+def websites
+  ['google.com', 'apple.com', 'blizzard.com', 'trello.com', 'notion.so', 'bestbuy.com']
+end
+
+def create_user_and_project!
+  user = User.create!(email: Faker::Internet.email, password: 'password')
+  user.projects.create!(title: "#{Faker::Company.name} newsletter", description: Faker::Company.catch_phrase,
+                        website: websites.sample)
+end
+
+5.times do
+  create_user_and_project!
+end
