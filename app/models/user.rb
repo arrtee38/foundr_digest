@@ -14,4 +14,8 @@ class User < ApplicationRecord
   def generate_auth_code
     self.auth_code = SecureRandom.hex(24)
   end
+
+  def default_project
+    projects.order(created_at: :asc).first
+  end
 end
