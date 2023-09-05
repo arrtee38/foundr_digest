@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   resources :subscribe, only: [:index]
   get 'dashboard', to: 'dashboard#index'
 
-  get 'stakeholder_updates/new', to: 'stakeholder_updates#new'
+  # get 'stakeholder_updates/new', to: 'stakeholder_updates#new'
+  resources :stakeholder_updates, only: %i[new create show]
 
   resources :account, only: %i[index update]
   resources :billing_portal, only: [:create]
