@@ -9,12 +9,13 @@ def websites
   ['google.com', 'apple.com', 'blizzard.com', 'trello.com', 'notion.so', 'bestbuy.com']
 end
 
-def create_user_and_project!
-  user = User.create!(email: Faker::Internet.email, password: 'password')
-  user.projects.create!(title: "#{Faker::Company.name} newsletter", description: Faker::Company.catch_phrase,
+def setup_fake_data!
+  user = User.create!(email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, password: 'password')
+  project = user.projects.create!(title: "#{Faker::Company.name} newsletter", description: Faker::Company.catch_phrase,
                         website: websites.sample)
+  project.stakeholder_updates.create!(title: Faker::Company.bs, content: Faker::Hipster.paragraph)
 end
 
-5.times do
-  create_user_and_project!
+15.times do
+  setup_fake_data!
 end

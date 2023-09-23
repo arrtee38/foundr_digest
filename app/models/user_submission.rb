@@ -1,4 +1,6 @@
 class UserSubmission < ApplicationRecord
+  include Hashable
+
   PLAN_NAMES = %w[free pro]
 
   validates :plan_name, inclusion: { in: PLAN_NAMES }
@@ -20,13 +22,10 @@ class UserSubmission < ApplicationRecord
   end
 
   def accept!
-    password = generate_password
-    created_user = User.create!(email:, password:)
-    created_user.projects.create!(website: self.website)
+    password = generate_hash(8)
+    created_user = User.create!(email:, first_name:, last_name:,
+                                password:)
+    created_user.projects.create!(website:)
     UserSubmissionMailer.accept(self, created_user).deliver
-  end
-
-  def generate_password
-    SecureRandom.hex(8)
   end
 end
