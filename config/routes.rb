@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # get 'stakeholder_updates/new', to: 'stakeholder_updates#new'
   resources :stakeholder_updates, only: %i[new create show update]
+  resources :updates, only: [:show]
 
   resources :account, only: %i[index update]
   resources :billing_portal, only: [:create]

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   include Hashable
 
   scope :subscribed, -> { where(paying_customer: true) }
+  # scope :active, -> { where() }
 
   has_many :projects, dependent: :destroy
   has_many :subscribers, dependent: :destroy

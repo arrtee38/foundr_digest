@@ -2,8 +2,8 @@
 <p>Below are the latest updates from <%= @stakeholder_updates.count %> of the founder digests you're subscribed to.</p>
 <ul>
   <%= @stakeholder_updates.each do |stakeholder_update| %>
-    <li><%= stakeholder_update.title %>, by <%= stakeholder_update.user.name %> (<%= stakeholder_update.user.email %>)</li>
+    <li><%= link_to stakeholder_update.title, update_url(stakeholder_update.uuid), target: :_blank %>, by <%= stakeholder_update.user.name %> (<%= stakeholder_update.user.email %>)</li>
   <% end %>
 </ul>
-
-</p>Foundr Digest</p>
+</p>
+Foundr Digest</p>
