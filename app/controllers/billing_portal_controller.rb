@@ -23,12 +23,12 @@ class BillingPortalController < ApplicationController
       customer: current_user.stripe_customer_id,
       payment_method_types: ['card'],
       mode: 'subscription',
-      allow_promotion_codes: true,
+      allow_promotion_codes: false,
       line_items: [{
         quantity: 1,
-        price: ENV['STRIPE_PRODUCT_PRICE_ID']
+        price: "price_1NwWJdKGc5iYQ5vfRz960iCZ", # ENV['STRIPE_PRODUCT_PRICE_ID']
       }],
-      success_url: "#{ENV['BASE_URL']}#{dashboard_index_path}?subscribed=true",
+      success_url: "#{ENV['BASE_URL']}#{dashboard_path}?subscribed=true",
       cancel_url: "#{ENV['BASE_URL']}#{account_index_path}?aborted=true"
     })
 

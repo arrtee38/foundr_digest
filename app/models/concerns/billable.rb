@@ -9,6 +9,7 @@ module Billable
   def setup_stripe_customer
     customer = Stripe::Customer.create({
       email: self.email,
+      name: self.name,
       metadata: {
         external_id: self.id
       }

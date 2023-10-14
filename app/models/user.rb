@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   include Signupable
-  include Onboardable
   include Billable
   include Hashable
 
@@ -23,5 +22,9 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def finished_onboarding?
+    stripe_subscription_id?
   end
 end
