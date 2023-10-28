@@ -7,8 +7,13 @@
 
   <%= form_for @stakeholder_update do |f| %>
     <%= f.text_field :confirmed_at, type: 'hidden', value: DateTime.now %>
-    <div class="mt-8 text-right">  
-      <button type="submit" class="w-full rounded-md bg-brand-purple-light px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-purple-light">Confirm and Share</button>
+    <div class="flex">
+      <div class="mt-8 text-right">  
+        <%= link_to 'Edit', edit_stakeholder_update_path(id: @stakeholder_update.id), class: "inline-flex rounded-md bg-brand-purple-light px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-purple-light" %>
+      </div>
+      <div class="mt-8 text-right flex-1">  
+        <button type="submit" class="inline-flex rounded-md bg-brand-purple-light px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-purple-light">Confirm and Share</button>
+      </div>
     </div>
   <% end %>
 </div>

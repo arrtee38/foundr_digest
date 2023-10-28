@@ -11,85 +11,84 @@
           <p class="text-lg"><%= @project.title %></p>
           <p class="text-sm"><%= @project.description %></p>
           <p>
-        </div>
-      </div>
-    </div>
-    <div class="basis-1/2 text-right">
-      <p><%= @project.subscribers.count %> subscribers</p>
-      <p><a href="<%= new_stakeholder_update_path %>" class="text-brand-purple underline">Write an Update</a> | 
-      <% if current_user.stakeholder_updates.count > 0 %>
-        <a href="<%= stakeholder_update_path(current_user.stakeholder_updates.last) %>" class="text-brand-purple underline">View Last</a></p>
-      <% end %>
-      <p><a href="#" class="text-brand-purple underline">Edit Subscription</a></p>
-    </div>
-  </div>
-</div>
-<!-- newsletters area -->
-<div class="px-3 py-5 max-w-3xl mx-auto space-y-4">
-  <% @other_projects.each do |other_project| %>
-    <div class="flex border border-dashed border-2 p-2">
-      <div class="basis-1/2">
-        <div class="flex gap-x-2">
-          <div class="basis-1/6">
-            <img src="https:/logo.clearbit.com/<%= other_project.website %>" alt="">
-          </div>
-          <div class="basis-5/6">
-            <p class="text-lg"><%= other_project.title %></p>
-            <p class="text-xs"><%= other_project.description %> (<%= other_project.website %>)</p>
-            <p>
           </div>
         </div>
       </div>
       <div class="basis-1/2 text-right">
-        <div class="relative flex items-start py-4">
-          <div class="min-w-0 flex-1 text-sm">
-            <label for="<%= other_project.id %>_subscribed_status" class="font-medium text-gray-900">{{ Subscribe Status }}</label>
-          </div>
-          <div class="ml-3 flex h-5 items-center">
-            <% subscriber = Subscriber.find_by(user_id: current_user.id, project_id: other_project.id) %>
-            <input onchange="checkboxChanged(this)" <%= 'checked' if subscriber %> data-subscriber-id="<%= subscriber.try(:id) %>" data-project-id="<%= other_project.id %>" id="<%= other_project.id %>_subscribed_status" aria-describedby="subscribed-description" name="subscribed" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-brand-gold focus:ring-brand-gold">
-          </div>
-        </div>
+        <p><%= @project.subscribers.count %> subscribers</p>
+        <p><a href="<%= new_stakeholder_update_path %>" class="text-brand-purple underline">Write an Update</a> | 
+          <% if current_user.stakeholder_updates.count > 0 %>
+            <a href="<%= stakeholder_update_path(current_user.stakeholder_updates.last) %>" class="text-brand-purple underline">View Last</a></p>
+        <% end %>
+        <p><a href="#" class="text-brand-purple underline">Edit Subscription</a></p>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+  <!-- newsletters area -->
+  <div class="px-3 py-5 max-w-3xl mx-auto space-y-4">
+    <p class='text-right'>Subscribed?</p>
+    <% @other_projects.each do |other_project| %>
+      <div class="flex border border-dashed border-2 p-2">
+        <div class="basis-1/2">
+          <div class="flex gap-x-2">
+            <div class="basis-1/6">
+              <img src="https:/logo.clearbit.com/<%= other_project.website %>" alt="">
+            </div>
+            <div class="basis-5/6">
+              <p class="text-lg"><%= other_project.title %></p>
+              <p class="text-xs"><%= other_project.description %> (<%= other_project.website %>)</p>
+              <p>
+              </div>
+            </div>
+          </div>
+          <div class="basis-1/2 text-right">
+            <div class="relative flex items-start py-4">
+              <div class="min-w-0 flex-1 text-sm">
+                <label for="<%= other_project.id %>_subscribed_status" class="font-medium text-gray-900">Subscribe</label>
+              </div>
+              <div class="ml-3 flex h-5 items-center">
+                <% subscriber = Subscriber.find_by(user_id: current_user.id, project_id: other_project.id) %>
+                <input onchange="checkboxChanged(this)" <%= 'checked' if subscriber %> data-subscriber-id="<%= subscriber.try(:id) %>" data-project-id="<%= other_project.id %>" id="<%= other_project.id %>_subscribed_status" aria-describedby="subscribed-description" name="subscribed" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-brand-gold focus:ring-brand-gold">
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <script type="text/javascript">
+      function checkboxChanged(checkbox) {
+        let projectId = checkbox.dataset.projectId;
 
-<script type="text/javascript">
-  function checkboxChanged(checkbox) {
-    let projectId = checkbox.dataset.projectId;
-    
-    if (checkbox.checked) {
-      createSubscription(projectId);
-    } else {
-      let subscriberId = checkbox.dataset.subscriberId;
-      deleteSubscription(projectId, subscriberId);
-    }
-  }
-
-  function createSubscription(projectId) {
-      $.ajax({ 
-        url: "/subscribers",
-        method: "POST",
-        data: { subscriber: { project_id: projectId } },
-        success: function(data) {
-          let subscriberId = data.subscriber_id;
-          let projectId = data.project_id;
-          let checkbox = document.getElementById(projectId + '_subscribed_status');
-          checkbox.dataset.subscriberId = subscriberId;
+        if (checkbox.checked) {
+          createSubscription(projectId);
+        } else {
+          let subscriberId = checkbox.dataset.subscriberId;
+          deleteSubscription(projectId, subscriberId);
         }
-       })
-  }
+      }
 
-  function deleteSubscription(projectId, subscriberId) {
-      $.ajax({ 
-        url: "/subscribers/" + subscriberId,
-        method: "DELETE",
-        data: { subscriber: { project_id: projectId } },
-        success: function(data) {
-          console.log(data);
-        }
-       })
-  }
+      function createSubscription(projectId) {
+          $.ajax({
+            url: "/subscribers",
+            method: "POST",
+            data: { subscriber: { project_id: projectId } },
+            success: function(data) {
+              let subscriberId = data.subscriber_id;
+              let projectId = data.project_id;
+              let checkbox = document.getElementById(projectId + '_subscribed_status');
+              checkbox.dataset.subscriberId = subscriberId;
+            }
+           })
+      }
 
-</script>
+      function deleteSubscription(projectId, subscriberId) {
+          $.ajax({
+            url: "/subscribers/" + subscriberId,
+            method: "DELETE",
+            data: { subscriber: { project_id: projectId } },
+            success: function(data) {
+              console.log(data);
+            }
+           })
+      }
+    </script>

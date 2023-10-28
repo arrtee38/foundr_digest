@@ -11,11 +11,16 @@ class DigestService
 
   def call
     return unless wrote_recent_update?
+
     UserMailer.digests(user, stakeholder_updates).deliver
   end
 
   def wrote_recent_update?
-    user.stakeholder_updates.this_period.confirmed.count > 0
+    if user.pro_plan?
+      user.stakeholder_updates.this_quarter.confirmed.count > 0
+    else
+      user.stakeholder_updates.this_month.confirmed.count > 0
+    end
   end
 
   def stakeholder_updates
